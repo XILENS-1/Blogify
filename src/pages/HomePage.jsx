@@ -21,13 +21,13 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="w-full p-4 over">
+    <div className="w-full p-4 mt-2 ml-2 overflow-x-hidden">
       {loading ? (
         <div className="flex justify-center items-center h-full">
           <div className="loader text-2xl text-center font-semibold p-8">Loading Blogs...</div>
         </div>
       ) : (
-        <div className="grid grid-cols-3 ml-8 gap-y-16 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full">
           {blogs.map((blog) => (
             <BlogCard key={blog._id} blog={blog} />
           ))}

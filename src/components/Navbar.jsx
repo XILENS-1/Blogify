@@ -11,6 +11,7 @@ const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const handleLogoutClick = () => {
     setIsModalOpen(true);
   };
@@ -39,12 +40,25 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    // Update login status based on userId
     if (userId !== "guest" && !isLoggedIn) {
       setLoggedIn(true);
     } else if (userId === "guest" && isLoggedIn) {
       setLoggedIn(false);
     }
-  }, [userId, isLoggedIn]);
+
+    // Add/remove the "no-scroll" class to the body element
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'; // Prevent scrolling when the mobile menu is open
+    } else {
+      document.body.style.overflow = ''; // Allow scrolling when the mobile menu is closed
+    }
+
+    // Cleanup when the component is unmounted or when isMobileMenuOpen changes
+    return () => {
+      document.body.style.overflow = ''; // Ensure scrolling is enabled when component is unmounted
+    };
+  }, [userId, isLoggedIn, isMobileMenuOpen]);
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 shadow-lg">
@@ -65,9 +79,9 @@ const Navbar = () => {
             className="w-6 h-6"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M4 6h16M4 12h16M4 18h16"
             />
           </svg>
