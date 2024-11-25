@@ -53,11 +53,9 @@ export const fetchBlogByUser = async (userId) => {
 };
 
 
-export const registerUser = async (signUpData) => {
-  const response = await api.post("/api/register", signUpData);
-  return response.data;
+export const registerUser = async (userData) => {
+  return api.post("/api/user/register", userData);
 };
-
 
 export const createPost = async (blogData) => {
   console.log(blogData);

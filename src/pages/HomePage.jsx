@@ -14,20 +14,20 @@ const HomePage = () => {
       } catch (error) {
         console.error("Error fetching blogs:", error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
     getAllBlogs();
   }, []);
 
   return (
-    <div className="w-full p-4 mt-2 ml-2 overflow-x-hidden">
+    <div className="w-full p-4 mt-16 overflow-x-hidden">
       {loading ? (
-        <div className="flex justify-center items-center h-full">
-          <div className="loader text-2xl text-center font-semibold p-8">Loading Blogs...</div>
+        <div className="flex justify-center items-center h-screen">
+          <div className="text-2xl text-center font-semibold p-8">Loading Blogs...</div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {blogs.map((blog) => (
             <BlogCard key={blog._id} blog={blog} />
           ))}

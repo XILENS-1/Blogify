@@ -34,7 +34,7 @@ const AllPostPage = () => {
   }
 
   return (
-    <div className="w-full p-4">
+    <div className="mt-16 w-full p-4">
       {blogs.length === 0 ? (
         <p className="text-center text-xl font-semibold">No blogs found.</p>
       ) : (

@@ -9,7 +9,7 @@ import { deletePost, fetchBlogById } from "@/api/api";
 const BlogDetail = () => {
   const [blog, setBlog] = useState({});
   const [showModal, setShowModal] = useState(false);
-  const [deleting, setDeleting] = useState(false); // Add deleting state
+  const [deleting, setDeleting] = useState(false); 
   const { id } = useParams();
   const userId = useSelector((state) => state.auth?.user?.id ?? "guest");
   const navigate = useNavigate();
@@ -24,29 +24,26 @@ const BlogDetail = () => {
 
   const { title, image, content, createdAt, user } = blog;
 
-  const date = createdAt
-    ? moment(createdAt).format("DD MMM, YYYY")
-    : "";
+  const date = createdAt ? moment(createdAt).format("DD MMM, YYYY") : "";
 
-  // Navigate to edit page
+
   const handleEdit = () => {
     navigate(`/edit/${id}`, { state: { blog } });
   };
 
-  // Handle Delete Post
   const handleDelete = async () => {
-    setDeleting(true); // Set deleting state to true when delete begins
+    setDeleting(true); 
     try {
-      await deletePost(id); // Call the delete API
-      navigate("/all-post"); // Navigate back to home after deletion
+      await deletePost(id);
+      navigate("/all-post"); 
     } catch (error) {
       console.error("Error deleting the post:", error);
-      setDeleting(false); // Reset deleting state if error occurs
+      setDeleting(false); 
     }
   };
 
   return (
-    <div className=" p-8 h-full bg-gray-100">
+    <div className="mt-16 p-8 h-full bg-gray-100">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">{title || "Loading blog..."}</h1>
 
@@ -56,7 +53,7 @@ const BlogDetail = () => {
             <MdEdit
               size={25}
               className="text-yellow-500 text-lg cursor-pointer hover:scale-150"
-              onClick={handleEdit} // Navigate to the edit page
+              onClick={handleEdit} 
             />
 
             {/* Delete Button */}
@@ -83,7 +80,10 @@ const BlogDetail = () => {
         />
       )}
 
-      <p className="text-xl" dangerouslySetInnerHTML={{ __html: content || "" }} />
+      <p
+        className="text-xl"
+        dangerouslySetInnerHTML={{ __html: content || "" }}
+      />
 
       {/* Delete Confirmation Modal */}
       {showModal && (
@@ -94,14 +94,14 @@ const BlogDetail = () => {
             </h2>
             <div className="flex gap-12">
               <button
-                onClick={handleDelete} // Call delete function if "Yes"
+                onClick={handleDelete} 
                 className="bg-red-600 w-1/2 text-white px-4 py-2 rounded-md"
-                disabled={deleting} // Disable button while deleting
+                disabled={deleting}
               >
                 {deleting ? "Deleting..." : "Yes, Delete"}
               </button>
               <button
-                onClick={() => setShowModal(false)} // Close modal if "No"
+                onClick={() => setShowModal(false)}
                 className="bg-gray-300 text-black px-4 py-2 w-1/2 rounded-md"
               >
                 No

@@ -55,7 +55,7 @@ const LoginPage = () => {
   });
 
   return (
-    <div className="mt-12 flex items-center justify-center">
+    <div className="mt-24 flex items-center justify-center">
       <div className="bg-white p-8 w-96 rounded-lg shadow-lg">
         <h1 className="text-xl font-semibold mb-8 text-center">Welcome Back</h1>
         <form onSubmit={formik.handleSubmit}>

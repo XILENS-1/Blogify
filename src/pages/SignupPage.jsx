@@ -48,7 +48,7 @@ const SignupPage = () => {
     }
   };
      
-      console.log("Sending data to backend:", dataToSubmit);
+     
 
     
       const response = await registerUser(dataToSubmit);
