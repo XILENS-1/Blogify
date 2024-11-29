@@ -3,8 +3,11 @@ import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "@/store/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+    const navigate = useNavigate();
+  const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth?.user?.id ?? "guest");
   const dispatch = useDispatch();
   const [isLoggedIn, setLoggedIn] = useState(userId !== "guest");
@@ -18,11 +21,11 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
 
-  const handleLogout = () => {
+ const handleLogout = () => {
     dispatch(removeUser());
     setLoggedIn(false);
     closeMobileMenu();
-    window.location.reload();
+    navigate("/"); // Redirects to homepage
   };
 
   useEffect(() => {
