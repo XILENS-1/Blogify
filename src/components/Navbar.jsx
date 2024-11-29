@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "@/store/userSlice";
-import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-    const navigate = useNavigate();
-  const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth?.user?.id ?? "guest");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isLoggedIn, setLoggedIn] = useState(userId !== "guest");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
@@ -21,11 +20,15 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
 
- const handleLogout = () => {
+  const openLogoutModal = () => setShowLogoutModal(true);
+  const closeLogoutModal = () => setShowLogoutModal(false);
+
+  const confirmLogout = () => {
     dispatch(removeUser());
     setLoggedIn(false);
     closeMobileMenu();
-    navigate("/"); // Redirects to homepage
+    setShowLogoutModal(false);
+    navigate("/"); // Redirect to homepage
   };
 
   useEffect(() => {
@@ -89,7 +92,10 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <button onClick={handleLogout} className="hover:text-red-500">
+                  <button
+                    onClick={openLogoutModal}
+                    className="hover:text-red-500"
+                  >
                     Logout
                   </button>
                 </li>
@@ -148,7 +154,7 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <button onClick={handleLogout}>Logout</button>
+                    <button onClick={openLogoutModal}>Logout</button>
                   </li>
                 </>
               ) : (
@@ -171,6 +177,30 @@ const Navbar = () => {
                 </>
               )}
             </ul>
+          </div>
+        </div>
+      )}
+
+      {showLogoutModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+            <p className="text-lg font-medium mb-4">
+              Are you sure you want to log out?
+            </p>
+            <div className="flex justify-around">
+              <button
+                onClick={confirmLogout}
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
+              >
+                Yes, Logout
+              </button>
+              <button
+                onClick={closeLogoutModal}
+                className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       )}
